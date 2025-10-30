@@ -45,7 +45,7 @@ function calcularFrebet() {
     `;
 }
 
-// Módulo 2: Converter Frebet (VERSÃO CORRIGIDA)
+// Módulo 2: Converter Frebet (CORRIGIDO)
 function converterFrebet() {
     const valorFrebet = parseNumber(document.getElementById('valor-frebet').value);
     const oddBack = parseNumber(document.getElementById('odd-back-frebet').value);
@@ -87,7 +87,7 @@ function converterFrebet() {
     `;
 }
 
-// Módulo 3: Surebet
+// Módulo 3: Surebet (VERSÃO CORRIGIDA)
 function calcularSurebet() {
     const valorBack = parseNumber(document.getElementById('valor-back-surebet').value);
     const oddBack = parseNumber(document.getElementById('odd-back-surebet').value);
@@ -100,10 +100,15 @@ function calcularSurebet() {
         return;
     }
 
+    // Cálculo do valor do lay
     const valorLay = (valorBack * oddBack) / (oddLay * (1 - comissao));
-    const lucroBack = valorBack * oddBack - valorBack;
-    const perdaLay = valorLay * oddLay * (1 - comissao);
-    const lucro = Math.min(lucroBack - perdaLay, valorLay * (1 - comissao) - valorBack);
+    
+    // Cálculo do lucro nos dois cenários
+    const lucroCenario1 = (valorBack * oddBack) - (valorLay * oddLay);
+    const lucroCenario2 = (valorLay * (1 - comissao)) - valorBack;
+    
+    // Lucro garantido é o menor valor entre os dois cenários
+    const lucro = Math.min(lucroCenario1, lucroCenario2);
     const isValid = lucro > 0;
 
     document.getElementById('resultado-surebet').innerHTML = `
@@ -112,7 +117,7 @@ function calcularSurebet() {
             <div><strong>Valor do Lay:</strong> ${formatCurrency(valorLay)}</div>
         </div>
         <div class="result-item ${isValid ? 'success' : 'danger'}">
-            <i class="fas fa-${isValid ? 'check-circle' : 'times-circle'}"></i>
+            <i class="fas fa-chart-line"></i>
             <div><strong>Lucro Garantido:</strong> ${formatCurrency(lucro)}</div>
         </div>
         <div class="result-item">
@@ -120,6 +125,10 @@ function calcularSurebet() {
             <div><strong>Arbitragem Válida:</strong> ${isValid ? 
                 '<span style="color: #4CAF50;">✅ Sim</span>' : 
                 '<span style="color: #f44336;">❌ Não</span>'}</div>
+        </div>
+        <div class="result-item info">
+            <i class="fas fa-info-circle"></i>
+            <div><strong>Detalhe:</strong> Cenário 1: ${formatCurrency(lucroCenario1)} | Cenário 2: ${formatCurrency(lucroCenario2)}</div>
         </div>
     `;
 }
