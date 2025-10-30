@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPÉRIO ARQUEIRO - Calculadora de Arbitragem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho Premium -->
+        <header class="premium-header">
+            <div class="brand-container">
+                <div class="brand-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h1 class="brand-title">IMPÉRIO ARQUEIRO</h1>
+                <div class="brand-subtitle">ARBITRAGEM 100%</div>
+            </div>
+            <div class="header-decoration"></div>
+        </header>
+
+        <!-- Conteúdo Centralizado -->
+        <main class="main-content">
+            <!-- Módulo 1: Ganhar Frebet -->
+            <div class="premium-module">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h2>GANHAR FREBET</h2>
+                </div>
+                <div class="module-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Valor da Aposta</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="valor-aposta" placeholder="50,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Back (Casa)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-back" placeholder="2,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Lay (Exchange)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-lay" placeholder="2,04" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Comissão (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="comissao" value="5" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="premium-btn" onclick="calcularFrebet()">
+                        <span class="btn-text">CALCULAR</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div id="resultado-frebet" class="result-container"></div>
+                </div>
+            </div>
+
+            <!-- Módulo 2: Converter Frebet -->
+            <div class="premium-module">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h2>CONVERTER FREBET</h2>
+                </div>
+                <div class="module-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Valor da Frebet</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="valor-frebet" placeholder="50,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Back (Casa)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-back-frebet" placeholder="3,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Lay (Exchange)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-lay-frebet" placeholder="3,10" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Comissão (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="comissao-frebet" value="5" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="premium-btn" onclick="converterFrebet()">
+                        <span class="btn-text">CONVERTER</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div id="resultado-converter" class="result-container"></div>
+                </div>
+            </div>
+
+            <!-- Módulo 3: Surebet -->
+            <div class="premium-module">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>SUREBET</h2>
+                </div>
+                <div class="module-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Valor do Back</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="valor-back-surebet" placeholder="100,00" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Back (Casa)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-back-surebet" placeholder="2,10" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Lay (Exchange)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="odd-lay-surebet" placeholder="2,06" step="0.01">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Comissão (%)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="comissao-surebet" value="5" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="premium-btn" onclick="calcularSurebet()">
+                        <span class="btn-text">CALCULAR</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div id="resultado-surebet" class="result-container"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Rodapé Premium -->
+        <footer class="premium-footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-crown"></i>
+                    <span>IMPÉRIO ARQUEIRO</span>
+                </div>
+                <div class="footer-copyright">
+                    © 2023 Todos os direitos reservados
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
