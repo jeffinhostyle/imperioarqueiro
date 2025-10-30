@@ -45,7 +45,7 @@ function calcularFrebet() {
     `;
 }
 
-// Módulo 2: Converter Frebet (CORRIGIDO)
+// Módulo 2: Converter Frebet (VERSÃO CORRIGIDA)
 function converterFrebet() {
     const valorFrebet = parseNumber(document.getElementById('valor-frebet').value);
     const oddBack = parseNumber(document.getElementById('odd-back-frebet').value);
@@ -58,11 +58,13 @@ function converterFrebet() {
         return;
     }
 
-    // Cálculo preciso com mais casas decimais
-    const valorLay = (valorFrebet * (oddBack - 1)) / (oddLay * (1 - comissao));
-    const lucroBruto = valorFrebet * (oddBack - 1);
-    const perdaLay = valorLay * oddLay * (1 - comissao);
-    const lucro = lucroBruto - perdaLay;
+    // FÓRMULA CORRETA PARA VALOR DO LAY
+    const valorLay = (valorFrebet * (oddBack - 1)) / (oddLay - comissao);
+    
+    // CÁLCULO PRECISO DO LUCRO
+    const lucroCenario1 = (valorFrebet * (oddBack - 1)) - (valorLay * (oddLay - 1));
+    const lucroCenario2 = valorLay * (1 - comissao);
+    const lucro = Math.min(lucroCenario1, lucroCenario2);
     const roi = (lucro / valorFrebet) * 100;
 
     document.getElementById('resultado-converter').innerHTML = `
@@ -77,6 +79,10 @@ function converterFrebet() {
         <div class="result-item">
             <i class="fas fa-percentage"></i>
             <div><strong>ROI:</strong> ${roi.toFixed(4)}%</div>
+        </div>
+        <div class="result-item info">
+            <i class="fas fa-info-circle"></i>
+            <div><strong>Detalhe:</strong> Cenário 1: ${formatCurrency(lucroCenario1)} | Cenário 2: ${formatCurrency(lucroCenario2)}</div>
         </div>
     `;
 }
