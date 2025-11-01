@@ -154,6 +154,50 @@
                     <div id="resultado-surebet" class="result-container"></div>
                 </div>
             </div>
+
+            <!-- Módulo 4: Arbitragem 1X2 (3 Casas) - NOVO -->
+            <div class="premium-module">
+                <div class="module-header">
+                    <div class="module-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2>ARBITRAGEM 1X2 (3 CASAS)</h2>
+                </div>
+                <div class="module-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Valor Total</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="text" id="valor-total" placeholder="100,00">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Vitória Casa</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="odd-vitoria-casa" placeholder="2,60">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Empate</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="odd-empate" placeholder="3,40">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Odd Vitória Visitante</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="odd-vitoria-visitante" placeholder="3,80">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="premium-btn" onclick="calcularArbitragem1X2()">
+                        <span class="btn-text">CALCULAR</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div id="resultado-arbitragem-1x2" class="result-container"></div>
+                </div>
+            </div>
         </main>
 
         <!-- Rodapé Premium -->
