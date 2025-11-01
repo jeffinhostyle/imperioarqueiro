@@ -45,7 +45,7 @@ function calcularFrebet() {
     `;
 }
 
-// Módulo 2: Converter Frebet (CORRIGIDO)
+// Módulo 2: Converter Frebet
 function converterFrebet() {
     const valorFrebet = parseNumber(document.getElementById('valor-frebet').value);
     const oddBack = parseNumber(document.getElementById('odd-back-frebet').value);
@@ -87,7 +87,7 @@ function converterFrebet() {
     `;
 }
 
-// Módulo 3: Surebet (VERSÃO CORRIGIDA)
+// Módulo 3: Surebet
 function calcularSurebet() {
     const valorBack = parseNumber(document.getElementById('valor-back-surebet').value);
     const oddBack = parseNumber(document.getElementById('odd-back-surebet').value);
@@ -131,4 +131,94 @@ function calcularSurebet() {
             <div><strong>Detalhe:</strong> Cenário 1: ${formatCurrency(lucroCenario1)} | Cenário 2: ${formatCurrency(lucroCenario2)}</div>
         </div>
     `;
+}
+
+// Módulo 4: Arbitragem 1X2 (3 Casas) - NOVO
+function calcularArbitragem1X2() {
+    const valorTotal = parseNumber(document.getElementById('valor-total').value);
+    const oddVitoriaCasa = parseNumber(document.getElementById('odd-vitoria-casa').value);
+    const oddEmpate = parseNumber(document.getElementById('odd-empate').value);
+    const oddVitoriaVisitante = parseNumber(document.getElementById('odd-vitoria-visitante').value);
+
+    if (isNaN(valorTotal) || isNaN(oddVitoriaCasa) || isNaN(oddEmpate) || isNaN(oddVitoriaVisitante)) {
+        document.getElementById('resultado-arbitragem-1x2').innerHTML = 
+            '<div class="result-item danger"><i class="fas fa-exclamation-triangle"></i><div><strong>Erro:</strong> Preencha todos os campos corretamente!</div></div>';
+        return;
+    }
+
+    // Calcular probabilidades implícitas
+    const probVitoriaCasa = 1 / oddVitoriaCasa;
+    const probEmpate = 1 / oddEmpate;
+    const probVitoriaVisitante = 1 / oddVitoriaVisitante;
+    const somaProbabilidades = probVitoriaCasa + probEmpate + probVitoriaVisitante;
+
+    // Verificar se há arbitragem
+    const temArbitragem = somaProbabilidades < 1;
+
+    // Calcular valores para cada aposta
+    let valorVitoriaCasa, valorEmpate, valorVitoriaVisitante;
+    
+    if (temArbitragem) {
+        // Calcular valores para equalizar o retorno
+        valorVitoriaCasa = valorTotal * (probVitoriaCasa / somaProbabilidades);
+        valorEmpate = valorTotal * (probEmpate / somaProbabilidades);
+        valorVitoriaVisitante = valorTotal * (probVitoriaVisitante / somaProbabilidades);
+        
+        // Calcular retorno em cada cenário
+        const retornoVitoriaCasa = valorVitoriaCasa * oddVitoriaCasa;
+        const retornoEmpate = valorEmpate * oddEmpate;
+        const retornoVitoriaVisitante = valorVitoriaVisitante * oddVitoriaVisitante;
+        
+        // Calcular lucro garantido
+        const lucro = Math.min(retornoVitoriaCasa, retornoEmpate, retornoVitoriaVisitante) - valorTotal;
+        const roi = (lucro / valorTotal) * 100;
+
+        // Exibir resultados
+        document.getElementById('resultado-arbitragem-1x2').innerHTML = `
+            <div class="result-item">
+                <i class="fas fa-percentage"></i>
+                <div><strong>Soma das Probabilidades:</strong> ${(somaProbabilidades * 100).toFixed(2)}%</div>
+            </div>
+            <div class="result-item success">
+                <i class="fas fa-check-circle"></i>
+                <div><strong>Arbitragem Válida:</strong> Sim (${(somaProbabilidades * 100).toFixed(2)}% < 100%)</div>
+            </div>
+            <div class="result-item">
+                <i class="fas fa-coins"></i>
+                <div><strong>Aposta Vitória Casa:</strong> ${formatCurrency(valorVitoriaCasa)}</div>
+            </div>
+            <div class="result-item">
+                <i class="fas fa-coins"></i>
+                <div><strong>Aposta Empate:</strong> ${formatCurrency(valorEmpate)}</div>
+            </div>
+            <div class="result-item">
+                <i class="fas fa-coins"></i>
+                <div><strong>Aposta Vitória Visitante:</strong> ${formatCurrency(valorVitoriaVisitante)}</div>
+            </div>
+            <div class="result-item success">
+                <i class="fas fa-chart-line"></i>
+                <div><strong>Lucro Garantido:</strong> ${formatCurrency(lucro)}</div>
+            </div>
+            <div class="result-item">
+                <i class="fas fa-percentage"></i>
+                <div><strong>ROI:</strong> ${roi.toFixed(2)}%</div>
+            </div>
+        `;
+    } else {
+        // Não há arbitragem
+        document.getElementById('resultado-arbitragem-1x2').innerHTML = `
+            <div class="result-item">
+                <i class="fas fa-percentage"></i>
+                <div><strong>Soma das Probabilidades:</strong> ${(somaProbabilidades * 100).toFixed(2)}%</div>
+            </div>
+            <div class="result-item danger">
+                <i class="fas fa-times-circle"></i>
+                <div><strong>Arbitragem Válida:</strong> Não (${(somaProbabilidades * 100).toFixed(2)}% > 100%)</div>
+            </div>
+            <div class="result-item info">
+                <i class="fas fa-info-circle"></i>
+                <div><strong>Observação:</strong> Não há oportunidade de arbitragem com estas odds</div>
+            </div>
+        `;
+    }
 }
